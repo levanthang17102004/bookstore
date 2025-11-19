@@ -31,11 +31,27 @@ axiosClient.interceptors.response.use(
   (error: any) => {
     console.log(`Error api ${JSON.stringify(error)}`);
     if (error.response) {
-      throw error.response.data || error.response;
+      // Server responded with error status
+      const errorData = error.response.data || {};
+      const errorMessage = errorData.message || error.response.statusText || 'Đã xảy ra lỗi';
+      const errorObj = {
+        ...errorData,
+        message: errorMessage,
+        statusCode: error.response.status,
+      };
+      throw errorObj;
     } else if (error.request) {
-      throw new Error('Không thể kết nối đến server');
+      // Request was made but no response received
+      throw {
+        message: 'Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng.',
+        statusCode: 0,
+      };
     } else {
-      throw new Error(error.message || 'Đã xảy ra lỗi');
+      // Something else happened
+      throw {
+        message: error.message || 'Đã xảy ra lỗi',
+        statusCode: 0,
+      };
     }
   },
 );

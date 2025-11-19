@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ActivityIndicator, ReactNode } from "react";
 import {
   Pressable,
   StyleProp,
@@ -30,9 +30,10 @@ interface IProps {
   buttonStyle?: StyleProp<ViewStyle>;
   pressStyle?: StyleProp<ViewStyle>;
   disabled?: boolean;
+  Loading?: boolean;
 }
 const ShareButton = (props: IProps) => {
-  const { title, onPress, icons, textStyle, buttonStyle, pressStyle, disabled = false } = props;
+  const { title, onPress, icons, textStyle, buttonStyle, pressStyle, disabled = false, Loading = false } = props;
 
   return (
     <Pressable
@@ -47,8 +48,14 @@ const ShareButton = (props: IProps) => {
       disabled={disabled}
     >
       <View style={[styles.btnContainer, buttonStyle]}>
-        {icons}
-        <Text style={textStyle}>{title}</Text>
+        {Loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <>
+            {icons}
+            <Text style={textStyle}>{title}</Text>
+          </>
+        )}
       </View>
     </Pressable>
   );
