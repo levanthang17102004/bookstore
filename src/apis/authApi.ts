@@ -1,4 +1,3 @@
-import { appInfo } from '../constants/appInfos';
 import axiosClient from './axiosClient';
 
 class AuthAPI {
@@ -7,7 +6,7 @@ class AuthAPI {
     data?: any,
     method?: 'get' | 'post' | 'put' | 'delete',
   ) => {
-    return await axiosClient(`${appInfo.BASE_URL}/auth${url}`, {
+    return await axiosClient(`/auth${url}`, {
       method: method ?? 'get',
       data,
     });
