@@ -1,3 +1,4 @@
+import authenticationAPI from "@/apis/authApi";
 import ShareButton from "@/components/button/share.button";
 import SocialButton from "@/components/button/social.button";
 import ShareInput from "@/components/input/share.input";
@@ -33,7 +34,12 @@ const LoginPage = () => {
   const [password, setPassword] = useState<string>("");
 
   const handleLogin = async () => {
-    console.log("check email = ", email, "check password = ", password)
+    try {
+      const res = await authenticationAPI.HandleAuthentication('/hello');
+      console.log(res)
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -65,9 +71,7 @@ const LoginPage = () => {
         <View style={{ marginVertical: 10 }}></View>
         <ShareButton
           title="Đăng Nhập"
-          onPress={() => {
-            console.log(email, password);
-          }}
+          onPress={handleLogin}
           textStyle={{
             color: "#fff",
             paddingVertical: 5,
@@ -92,7 +96,7 @@ const LoginPage = () => {
           }}
         >
           <Text style={{ color: "black" }}>Chưa có tài khoản?</Text>
-          <Link href={"/(auth)/signup" as any}>
+          <Link href={"/(auth)/signup"}>
             <Text
               style={{
                 color: APP_COLOR.ORANGE,

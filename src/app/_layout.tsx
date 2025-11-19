@@ -29,6 +29,12 @@ const RootLayout = () => {
         <Stack.Screen
           name="(auth)/verify"
           options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(tabs)"
+          options={{ headerShown: false }} />
+        <Stack.Screen
+          name="product/index"
+          options={{ headerShown: false }} />
       </Stack>
     </SafeAreaView>
   )

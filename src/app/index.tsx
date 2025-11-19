@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
 const WelcomePage = () => {
   if (true) {
-    return <Redirect href={"/(auth)/verify" as any} />;
+    return <Redirect href={"/(auth)/login"} />;
   }
 
 };
