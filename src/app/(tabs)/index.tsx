@@ -1,28 +1,50 @@
-
 import CustomFlatList from "@/components/CustomFlatList/CustomFlatList";
 import CollectionHome from "@/components/home/collection.home";
 import HeaderHome from "@/components/home/header.home";
 import SearchHome from "@/components/home/search.home";
 import TopListHome from "@/components/home/top.list.home";
+import React from "react";
 import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const data = [
-    { key: 1, name: "Top Quán Rating 5* tuần này", ref: "" },
-    { key: 2, name: "Quán Mới Lên Sàn", ref: "" },
-    { key: 3, name: "Ăn Thỏa Thích, Freeship 0Đ", ref: "" },
+    {
+        key: 1,
+        name: "Top Quán Rating 5* tuần này",
+        description: "Gợi ý quán được tín đồ thực ẩm đánh giá 5*",
+        refAPI: "top-rating"
+    },
+    {
+        key: 2,
+        name: "Quán Mới Lên Sàn",
+        description: "Khám phá ngay hàng loạt quán mới",
+        refAPI: "newcommer"
+    },
+    {
+        key: 3,
+        name: "Ăn Thỏa Thích, Freeship 0Đ",
+        description: "Bánh ngọt, chân gà, bánh tráng, ...",
+        refAPI: "top-freeship"
+    },
 ]
 
 const HomeTab = () => {
     return (
         // <SafeAreaView style={styles.container}>
-        <CustomFlatList
-            data={data}
-            style={styles.list}
-            renderItem={({ item }) => <CollectionHome name={item.name} />}
-            HeaderComponent={<HeaderHome />}
-            StickyElementComponent={<SearchHome />}
-            TopListElementComponent={<TopListHome />}
-        />
+        <SafeAreaView style={{ flex: 1 }}>
+            <CustomFlatList
+                data={data}
+                style={styles.list}
+                renderItem={({ item }) => (<CollectionHome
+                    name={item.name}
+                    description={item.description}
+                    refAPI={item.refAPI}
+                />)}
+                HeaderComponent={<HeaderHome />}
+                StickyElementComponent={<SearchHome />}
+                TopListElementComponent={<TopListHome />}
+            />
+        </SafeAreaView>
         // </SafeAreaView>
     );
 };
