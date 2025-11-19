@@ -1,39 +1,36 @@
-import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+
+interface IProps {
+  title: string;
+}
+
+const TextBetWeenLine = ({ title }: IProps) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.line} />
+      <Text style={styles.text}>{title}</Text>
+      <View style={styles.line} />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    justifyContent: "center",
+    gap: 15,
   },
   line: {
-    flex: 1,
+    width: "20%",
     height: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ccc",
   },
   text: {
-    color: "#fff",
-    fontSize: 14,
+    color: "black",
+    fontSize: 16,
   },
 });
-
-interface IProps {
-  title: string;
-  textStyle?: StyleProp<TextStyle>;
-  lineStyle?: StyleProp<ViewStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
-}
-
-const TextBetWeenLine = (props: IProps) => {
-  const { title, textStyle, lineStyle, containerStyle } = props;
-
-  return (
-    <View style={[styles.container, containerStyle]}>
-      <View style={[styles.line, lineStyle]} />
-      <Text style={[styles.text, textStyle]}>{title}</Text>
-      <View style={[styles.line, lineStyle]} />
-    </View>
-  );
-};
 
 export default TextBetWeenLine;
