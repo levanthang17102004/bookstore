@@ -2,6 +2,7 @@
 import ShareButton from "@/components/button/share.button";
 import SocialButton from "@/components/button/social.button";
 import ShareInput from "@/components/input/share.input";
+import { useCurrentApp } from "@/context/app.context";
 import { loginAPI } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
 import { LoginSchema } from "@/utils/validate.schema";
@@ -35,13 +36,60 @@ const styles = StyleSheet.create({
 });
 const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const { setAppState } = useCurrentApp();
 
   const handleLogin = async (email: string, password: string) => {
     try {
       setLoading(true);
+      
+      // Mock login cho tài khoản admin (chỉ để test)
+      if (email === "admin@gmail.com" && password === "123456") {
+        const mockUserData: IUserLogin = {
+          user: {
+            id: "1",
+            email: "admin@gmail.com",
+            fcmTokens: [],
+            photo: "default-avatar.png",
+            phone: "0123456789",
+            name: "Admin",
+            address: "Hà Nội"
+          },
+          accesstoken: "mock-token-admin-123456"
+        };
+        
+        setAppState(mockUserData);
+        
+        Toast.show("Đăng nhập thành công!", {
+          duration: Toast.durations.SHORT,
+          textColor: 'white',
+          backgroundColor: "#4CAF50",
+          opacity: 1
+        });
+        
+        setTimeout(() => {
+          router.replace("/(tabs)");
+        }, 2000);
+        
+        setLoading(false);
+        return;
+      }
+      
       const res = await loginAPI(email, password);
       if (res.data) {
-        router.replace("/(tabs)");
+        // Lưu thông tin user vào context
+        setAppState(res.data);
+        
+        Toast.show("Đăng nhập thành công!", {
+          duration: Toast.durations.SHORT,
+          textColor: 'white',
+          backgroundColor: "#4CAF50",
+          opacity: 1
+        });
+        
+        // Chờ 2 giây trước khi chuyển trang
+        setTimeout(() => {
+          router.replace("/(tabs)");
+        }, 2000);
       } else {
         const m = Array.isArray(res.message) ? res.message[0] : res.message;
 
