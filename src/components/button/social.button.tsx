@@ -31,11 +31,18 @@ const styles = StyleSheet.create({
   },
   footer: {},
 });
-const SocialButton = () => {
+
+interface IProps {
+  title: string
+}
+
+const SocialButton = (props: IProps) => {
+  const { title } = props;
   return (
     <View style={styles.welcomeBtn}>
-      <View style={{ marginVertical: 2 }}></View>
-      <TextBetWeenLine title="Đăng nhập với" />
+      <TextBetWeenLine
+        title={title}
+      />
       <View
         style={{
           flexDirection: "row",
