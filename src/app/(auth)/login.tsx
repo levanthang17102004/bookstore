@@ -38,11 +38,10 @@ const LoginPage = () => {
 
   const handleLogin = async (email: string, password: string) => {
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await loginAPI(email, password);
-      setLoading(false)
       if (res.data) {
-        router.replace("/(tabs)")
+        router.replace("/(tabs)");
       } else {
         const m = Array.isArray(res.message) ? res.message[0] : res.message;
 
@@ -57,11 +56,18 @@ const LoginPage = () => {
           router.replace({
             pathname: "/(auth)/verify",
             params: { email: email, isLogin: 1 }
-          })
+          });
         }
       }
     } catch (error) {
-      console.log("check error:", error)
+      console.log("check error:", error);
+      Toast.show("Đăng nhập thất bại. Vui lòng thử lại!", {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+        backgroundColor: "#f44336",
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -122,6 +128,18 @@ const LoginPage = () => {
               }}
               pressStyle={{ alignSelf: "stretch" }}
             />
+
+            <View style={{ marginVertical: 15, alignItems: "center" }}>
+              <Text
+                style={{
+                  color: APP_COLOR.ORANGE,
+                  textDecorationLine: "underline",
+                }}
+                onPress={() => router.push("/(auth)/forgot-password" as any)}
+              >
+                Quên mật khẩu?
+              </Text>
+            </View>
 
             <View
               style={{
